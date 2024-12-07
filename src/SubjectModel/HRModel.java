@@ -39,6 +39,10 @@ public class HRModel {
         return selectedEmployee;
     }
 
+    public Employee getChangedEmployee(){
+        return changedEmployee;
+    }
+
     public List<Employee> getCurrentFilteredResult(){
         return filteredResult;
     }

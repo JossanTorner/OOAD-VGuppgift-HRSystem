@@ -102,6 +102,7 @@ public class HRView implements EmployeeDetailsObserver, SearchResultObserver, Fi
         for(Employee employee : currentSearchResult){
             hrPanel.addEmployeeRow(employee);
         }
-        updateEmployeeDetails(model.getSelectedEmployee());
+        updateEmployeeDetails(model.getChangedEmployee()); //?
+//        updateEmployeeDetails(model.getSelectedEmployee());
     }
 }
