@@ -4,12 +4,10 @@ public abstract class AppUser {
 
     private final String name;
     private final String password;
-    private final UserRole role;
 
-    public AppUser(String name, String password, UserRole role) {
+    public AppUser(String name, String password) {
         this.name = name;
         this.password = password;
-        this.role = role;
     }
 
     public String getName() {
@@ -18,9 +16,5 @@ public abstract class AppUser {
 
     public String getPassword() {
         return password;
-    }
-
-    public UserRole getRole() {
-        return role;
     }
 }

@@ -19,7 +19,7 @@ public class HRDatabase {
             String line;
             while((line = br.readLine()) != null){
                 String[] info = line.split(" ");
-                AppUser user = UserFactory.createAppUser(info[0],info[1], UserRole.valueOf(info[2].trim()));
+                AppUser user = UserFactory.createAppUser(info[0],info[1], info[2].trim());
                 users.add(user);
             }
         } catch (IOException e) {

@@ -15,7 +15,7 @@ public class SeniorHRManager extends AppUser implements AuthorizedManager {
     List<Command> commandHistory;
 
     public SeniorHRManager(String name, String password) {
-        super(name, password, UserRole.SENIOR_MANAGER);
+        super(name, password);
 
         commandHistory = new ArrayList<>();
         employeeDatabase = new EmployeeDatabase();

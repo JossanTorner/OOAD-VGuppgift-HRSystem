@@ -2,12 +2,12 @@ package HR.UserSystem;
 
 public class UserFactory {
 
-    public static AppUser createAppUser(String username, String password, UserRole role){
+    public static AppUser createAppUser(String username, String password, String role){
         switch(role){
-            case SENIOR_MANAGER -> {
+            case "SENIOR_MANAGER" -> {
                 return new SeniorHRManager(username, password);
             }
-            case JUNIOR_MANAGER -> {
+            case "JUNIOR_MANAGER" -> {
                 return new JuniorHRManager(username, password);
             }
             default -> {
