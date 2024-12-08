@@ -12,7 +12,6 @@ import SubjectModel.HRModel;
 import ObserverView.HRView;
 
 import javax.swing.*;
-import java.util.ArrayList;
 import java.util.List;
 
 public class HRController {
@@ -109,7 +108,7 @@ public class HRController {
                 }
                 else{
                     System.out.println("Authorized manager trying to commit changes");
-                    List<EmployeeInfoChange> changesMade = getChangesMade(model.getSelectedEmployee());
+                    List<EmployeeInfoChange> changesMade = hrPanel.getChangesMade(model.getSelectedEmployee());
                     ((AuthorizedManager) appUser).makeUpdate(model.getSelectedEmployee(), changesMade);
                     model.setChangedEmployee(model.getSelectedEmployee());
                     view.updateEmployee();
@@ -133,43 +132,6 @@ public class HRController {
                 }
             }
         });
-    }
-
-    public List<EmployeeInfoChange> getChangesMade(Employee selectedEmployee){
-        List<EmployeeInfoChange> changes = new ArrayList<>();
-
-        HRPanel panelWithDetails = view.getHrPanel();
-        String currentName = panelWithDetails.getShowDetailsNameTextField().getText();
-        if (!currentName.equalsIgnoreCase(selectedEmployee.getName())) {
-            EmployeeInfoChange change = new EmployeeInfoChange("NAME", selectedEmployee.getName(), currentName);
-            changes.add(change);
-        }
-        double currentSalary = Double.parseDouble(panelWithDetails.getShowDetailsSalaryTextField().getText());
-        if (!(currentSalary == selectedEmployee.getSalary())){
-            EmployeeInfoChange change = new EmployeeInfoChange("SALARY", selectedEmployee.getSalary(), currentSalary);
-            changes.add(change);
-        }
-        Position position = Position.valueOf(panelWithDetails.getShowDetailsPositionTextField().getText());
-        if(position != selectedEmployee.getPosition()){
-            EmployeeInfoChange change = new EmployeeInfoChange("POSITION", selectedEmployee.getPosition(), position);
-            changes.add(change);
-        }
-        String currentPhoneNumber = panelWithDetails.getShowDetailsPhoneTextField().getText();
-        if (!currentPhoneNumber.equalsIgnoreCase(selectedEmployee.getPhoneNumber())) {
-            EmployeeInfoChange change = new EmployeeInfoChange("PHONE_NUMBER", selectedEmployee.getPhoneNumber(), currentPhoneNumber);
-            changes.add(change);
-        }
-        String currentEmail = panelWithDetails.getShowDetailsEmailTextField().getText();
-        if (!currentEmail.equalsIgnoreCase(selectedEmployee.getEmail())) {
-            EmployeeInfoChange change = new EmployeeInfoChange("EMAIL", selectedEmployee.getEmail(), currentEmail);
-            changes.add(change);
-        }
-        int currentWorkingPercentage = Integer.parseInt(panelWithDetails.getShowDetailsEmploymentPercentageTextField().getText());
-        if(currentWorkingPercentage != selectedEmployee.getWorkingPercentage()){
-            EmployeeInfoChange change = new EmployeeInfoChange("WORKING_PERCENTAGE", selectedEmployee.getWorkingPercentage(), currentWorkingPercentage);
-            changes.add(change);
-        }
-        return changes;
     }
 
 }

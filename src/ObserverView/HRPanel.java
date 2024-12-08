@@ -1,11 +1,15 @@
 package ObserverView;
 
 import EmployeeDatabase.Employee;
+import EmployeeDatabase.Position;
+import HR.Commands.EmployeeInfoChange;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class HRPanel extends JPanel {
 
@@ -133,6 +137,42 @@ public class HRPanel extends JPanel {
         undoChangesButton.setEnabled(false);
 
         setDetailsFieldEditable(false);
+    }
+
+    public List<EmployeeInfoChange> getChangesMade(Employee selectedEmployee){
+        List<EmployeeInfoChange> changes = new ArrayList<>();
+
+        String currentName = showDetailsNameTextField.getText();
+        if (!currentName.equalsIgnoreCase(selectedEmployee.getName())) {
+            EmployeeInfoChange change = new EmployeeInfoChange("NAME", selectedEmployee.getName(), currentName);
+            changes.add(change);
+        }
+        double currentSalary = Double.parseDouble(showDetailsSalaryTextField.getText());
+        if (!(currentSalary == selectedEmployee.getSalary())){
+            EmployeeInfoChange change = new EmployeeInfoChange("SALARY", selectedEmployee.getSalary(), currentSalary);
+            changes.add(change);
+        }
+        Position position = Position.valueOf(showDetailsPositionTextField.getText());
+        if(position != selectedEmployee.getPosition()){
+            EmployeeInfoChange change = new EmployeeInfoChange("POSITION", selectedEmployee.getPosition(), position);
+            changes.add(change);
+        }
+        String currentPhoneNumber = showDetailsPhoneTextField.getText();
+        if (!currentPhoneNumber.equalsIgnoreCase(selectedEmployee.getPhoneNumber())) {
+            EmployeeInfoChange change = new EmployeeInfoChange("PHONE_NUMBER", selectedEmployee.getPhoneNumber(), currentPhoneNumber);
+            changes.add(change);
+        }
+        String currentEmail = showDetailsEmailTextField.getText();
+        if (!currentEmail.equalsIgnoreCase(selectedEmployee.getEmail())) {
+            EmployeeInfoChange change = new EmployeeInfoChange("EMAIL", selectedEmployee.getEmail(), currentEmail);
+            changes.add(change);
+        }
+        int currentWorkingPercentage = Integer.parseInt(showDetailsEmploymentPercentageTextField.getText());
+        if(currentWorkingPercentage != selectedEmployee.getWorkingPercentage()){
+            EmployeeInfoChange change = new EmployeeInfoChange("WORKING_PERCENTAGE", selectedEmployee.getWorkingPercentage(), currentWorkingPercentage);
+            changes.add(change);
+        }
+        return changes;
     }
 
     public void setDetailsFieldEditable(boolean isEditable) {
