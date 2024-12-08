@@ -1,10 +1,9 @@
 package Controller;
 
-import EmployeeDatabase.Employee;
 import EmployeeDatabase.Position;
 import HR.Commands.EmployeeInfoChange;
 import HR.UserSystem.AppUser;
-import HR.UserSystem.HRDatabase;
+import HR.UserSystem.UserDatabase;
 import HR.UserSystem.AuthorizedManager;
 import ObserverView.HRPanel;
 import ObserverView.LogInPanel;
@@ -18,7 +17,6 @@ public class HRController {
 
     private final HRView view;
     private final HRModel model;
-    private final HRDatabase hrDatabase;
     private AppUser appUser;
     private boolean makingChanges = false;
 
@@ -26,7 +24,6 @@ public class HRController {
         this.model = model;
         view = new HRView(model);
         view.init();
-        hrDatabase = new HRDatabase();
         addActionListenersToHRPanel();
         addActionListenersToLoginPanel();
     }
@@ -45,7 +42,7 @@ public class HRController {
             String password = new String(logInPanel.getPasswordField().getPassword());
             System.out.println(password);
 
-            AppUser loggedIn = hrDatabase.findUserInDatabase(name, password);
+            AppUser loggedIn = UserDatabase.findUserInDatabase(name, password);
             if (loggedIn != null) {
                 appUser = loggedIn;
                 System.out.println("Logged in: " + appUser.getName());

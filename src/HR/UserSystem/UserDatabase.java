@@ -5,11 +5,11 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HRDatabase {
+public class UserDatabase {
 
-    List<AppUser> users = new ArrayList<>();
+    private static List<AppUser> users = new ArrayList<>();
 
-    public HRDatabase() {
+    private UserDatabase() {
         users = loadUsers();
     }
 
@@ -28,7 +28,7 @@ public class HRDatabase {
         return users;
     }
 
-    public AppUser findUserInDatabase(String name, String password){
+    public static AppUser findUserInDatabase(String name, String password){
         for(AppUser appUser : users){
             if (appUser.getName().equals(name) && appUser.getPassword().equals(password)){
                 return appUser;
@@ -37,7 +37,7 @@ public class HRDatabase {
         return null;
     }
 
-    public List<AppUser> getUsersFromDatabase(){
+    public static List<AppUser> getUsers() {
         return users;
     }
 }
