@@ -3,15 +3,14 @@ package HR.Commands;
 import EmployeeDatabase.Employee;
 import EmployeeDatabase.Position;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class UpdateEmployeeCommand implements Command {
+public class ChangeEmployeeCommand implements Command {
 
     Employee employee;
     List<EmployeeInfoChange> changesMade;
 
-    public UpdateEmployeeCommand(Employee employee, List<EmployeeInfoChange> changesMade) {
+    public ChangeEmployeeCommand(Employee employee, List<EmployeeInfoChange> changesMade) {
         this.employee = employee;
         this.changesMade = changesMade;
     }

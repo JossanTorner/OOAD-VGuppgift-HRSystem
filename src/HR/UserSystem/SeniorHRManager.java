@@ -4,7 +4,7 @@ import EmployeeDatabase.EmployeeDatabase;
 import EmployeeDatabase.Employee;
 import HR.Commands.Command;
 import HR.Commands.EmployeeInfoChange;
-import HR.Commands.UpdateEmployeeCommand;
+import HR.Commands.ChangeEmployeeCommand;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +23,7 @@ public class SeniorHRManager extends AppUser implements AuthorizedManager {
 
     @Override
     public void makeUpdate(Employee employee, List<EmployeeInfoChange> changesMade){
-        Command command = new UpdateEmployeeCommand(employee, changesMade);
+        Command command = new ChangeEmployeeCommand(employee, changesMade);
         command.execute();
         commandHistory.add(command);
     }

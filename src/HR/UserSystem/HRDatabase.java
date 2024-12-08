@@ -10,10 +10,10 @@ public class HRDatabase {
     List<AppUser> users = new ArrayList<>();
 
     public HRDatabase() {
-        users = loadUsersFromDatabase();
+        users = loadUsers();
     }
 
-    public List<AppUser> loadUsersFromDatabase(){
+    private List<AppUser> loadUsers(){
         List<AppUser> users = new ArrayList<>();
         try(BufferedReader br = new BufferedReader(new FileReader("src/HR/UserSystem/administrators.txt"))) {
             String line;
@@ -36,17 +36,6 @@ public class HRDatabase {
         }
         return null;
     }
-
-//    public void createNewUser(AppUser user) {
-//        if(Files.exists(Path.of("src/HR/UserSystem/administrators.txt"))){
-//            try(BufferedWriter writer = new BufferedWriter(new FileWriter("src/HR/UserSystem/administrators.txt", true))) {
-//                writer.write(user.getName() + ", " + user.getPassword() + ", " + user.getRole());
-//            }
-//            catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//        }
-//    }
 
     public List<AppUser> getUsersFromDatabase(){
         return users;

@@ -67,7 +67,7 @@ public class HRModel {
 
     public void notifyChangeObservers(){
         for(EmployeeChangeObserver observer : changeObservers){
-            observer.updateEmployeeChange();
+            observer.updateEmployee();
         }
     }
 

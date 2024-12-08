@@ -112,7 +112,7 @@ public class HRController {
                     List<EmployeeInfoChange> changesMade = getChangesMade(model.getSelectedEmployee());
                     ((AuthorizedManager) appUser).makeUpdate(model.getSelectedEmployee(), changesMade);
                     model.setChangedEmployee(model.getSelectedEmployee());
-                    view.updateEmployeeChange();
+                    view.updateEmployee();
                     hrPanel.getUndoChangesButton().setEnabled(true);
                 }
             }
@@ -125,7 +125,7 @@ public class HRController {
             if (appUser instanceof AuthorizedManager){
                 try{
                     ((AuthorizedManager) appUser).undoUpdate();
-                    view.updateEmployeeChange();
+                    view.updateEmployee();
                 }
                 catch (IllegalArgumentException ex){
                     JOptionPane.showMessageDialog(hrPanel, ex.getMessage());

@@ -96,7 +96,7 @@ public class HRView implements EmployeeDetailsObserver, SearchResultObserver, Fi
     }
 
     @Override
-    public void updateEmployeeChange(){
+    public void updateEmployee(){
         hrPanel.resetTable();
         List<Employee> currentSearchResult = model.getCurrentSearchResult();
         for(Employee employee : currentSearchResult){
