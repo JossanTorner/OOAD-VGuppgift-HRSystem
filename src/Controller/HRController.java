@@ -24,11 +24,11 @@ public class HRController {
         this.model = model;
         view = new HRView(model);
         view.init();
-        addActionListenersToHRPanel();
-        addActionListenersToLoginPanel();
+        addListenersToHRPanel();
+        addListenersToLoginPanel();
     }
 
-    public void addActionListenersToLoginPanel(){
+    public void addListenersToLoginPanel(){
         LogInPanel logInPanel = view.getLogInPanel();
 
         logInPanel.getCancelButton().addActionListener(e->{
@@ -43,6 +43,7 @@ public class HRController {
             System.out.println(password);
 
             AppUser loggedIn = UserDatabase.findUserInDatabase(name, password);
+
             if (loggedIn != null) {
                 appUser = loggedIn;
                 System.out.println("Logged in: " + appUser.getName());
@@ -56,7 +57,7 @@ public class HRController {
         });
     }
 
-    public void addActionListenersToHRPanel(){
+    public void addListenersToHRPanel(){
         HRPanel hrPanel = view.getHrPanel();
 
         hrPanel.getSearchField().addActionListener(e->{
@@ -78,7 +79,7 @@ public class HRController {
                 for (Position position : Position.values()) {
                     if (position.title.equalsIgnoreCase(selectedPosition)) {
                         model.filterSearchResultByPosition(position);
-                        view.updateFilterSearch();
+                        view.updateFilteredResult();
                     }
                 }
             }

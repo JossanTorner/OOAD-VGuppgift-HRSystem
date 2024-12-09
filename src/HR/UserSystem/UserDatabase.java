@@ -1,5 +1,6 @@
 package HR.UserSystem;
 
+
 import java.io.*;
 
 import java.util.ArrayList;
@@ -7,13 +8,13 @@ import java.util.List;
 
 public class UserDatabase {
 
-    private static List<AppUser> users = new ArrayList<>();
+    private static final List<AppUser> USERS = loadUsers();
 
     private UserDatabase() {
-        users = loadUsers();
+
     }
 
-    private List<AppUser> loadUsers(){
+    private static List<AppUser> loadUsers(){
         List<AppUser> users = new ArrayList<>();
         try(BufferedReader br = new BufferedReader(new FileReader("src/HR/UserSystem/administrators.txt"))) {
             String line;
@@ -29,15 +30,11 @@ public class UserDatabase {
     }
 
     public static AppUser findUserInDatabase(String name, String password){
-        for(AppUser appUser : users){
+        for(AppUser appUser : USERS){
             if (appUser.getName().equals(name) && appUser.getPassword().equals(password)){
                 return appUser;
             }
         }
         return null;
-    }
-
-    public static List<AppUser> getUsers() {
-        return users;
     }
 }

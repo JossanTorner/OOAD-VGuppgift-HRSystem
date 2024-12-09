@@ -7,7 +7,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.List;
 
-public class HRView implements EmployeeDetailsObserver, SearchResultObserver, FilterPositionObserver, EmployeeChangeObserver {
+public class HRView implements EmployeeDetailsObserver, SearchResultObserver, FilterResultObserver, EmployeeChangeObserver {
 
     JFrame frame;
 
@@ -47,7 +47,7 @@ public class HRView implements EmployeeDetailsObserver, SearchResultObserver, Fi
     private void registerAsObserver(){
         model.registerDetailsObserver(this);
         model.registerSearchObserver(this);
-        model.registerPositionSearchObserver(this);
+        model.registerFilterObserver(this);
         model.registerChangeObserver(this);
     }
 
@@ -55,7 +55,7 @@ public class HRView implements EmployeeDetailsObserver, SearchResultObserver, Fi
         model.setSearchResultByName("");
     }
 
-    public void updateEmployeeDetails(Employee selectedEmployee){
+    private void setFieldsWithDetails(Employee selectedEmployee){
         hrPanel.getShowDetailsNameTextField().setText(selectedEmployee.getName());
         hrPanel.getShowDetailsPositionTextField().setText(selectedEmployee.getPosition().name());
         hrPanel.getShowDetailsSalaryTextField().setText(String.valueOf(selectedEmployee.getSalary()));
@@ -74,7 +74,7 @@ public class HRView implements EmployeeDetailsObserver, SearchResultObserver, Fi
 
     @Override
     public void updateEmployeeDetails() {
-        updateEmployeeDetails(model.getSelectedEmployee());
+        setFieldsWithDetails(model.getSelectedEmployee());
     }
 
     @Override
@@ -87,7 +87,7 @@ public class HRView implements EmployeeDetailsObserver, SearchResultObserver, Fi
     }
 
     @Override
-    public void updateFilterSearch() {
+    public void updateFilteredResult() {
         hrPanel.resetTable();
         List<Employee> currentFilteredResult = model.getCurrentFilteredResult();
         for(Employee employee : currentFilteredResult){
@@ -102,7 +102,7 @@ public class HRView implements EmployeeDetailsObserver, SearchResultObserver, Fi
         for(Employee employee : currentSearchResult){
             hrPanel.addEmployeeRow(employee);
         }
-        updateEmployeeDetails(model.getChangedEmployee()); //?
+        setFieldsWithDetails(model.getChangedEmployee()); //?
 //        updateEmployeeDetails(model.getSelectedEmployee());
     }
 }

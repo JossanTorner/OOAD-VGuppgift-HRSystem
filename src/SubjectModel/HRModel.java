@@ -16,7 +16,7 @@ public class HRModel {
 
     private final List<EmployeeDetailsObserver> detailsObservers;
     private final List<SearchResultObserver> searchObservers;
-    private final List<FilterPositionObserver> positionSearchObservers;
+    private final List<FilterResultObserver> filterObservers;
     private final List<EmployeeChangeObserver> changeObservers;
 
     public HRModel() {
@@ -27,7 +27,7 @@ public class HRModel {
 
         detailsObservers = new ArrayList<>();
         searchObservers = new ArrayList<>();
-        positionSearchObservers = new ArrayList<>();
+        filterObservers = new ArrayList<>();
         changeObservers = new ArrayList<>();
     }
 
@@ -59,9 +59,9 @@ public class HRModel {
         }
     }
 
-    public void notifyPositionSearchObservers() {
-        for(FilterPositionObserver observer : positionSearchObservers) {
-            observer.updateFilterSearch();
+    public void notifyFilterObservers() {
+        for(FilterResultObserver observer : filterObservers) {
+            observer.updateFilteredResult();
         }
     }
 
@@ -83,8 +83,8 @@ public class HRModel {
         searchObservers.add(searchResultObserver);
     }
 
-    public void registerPositionSearchObserver(FilterPositionObserver filterPositionObserver) {
-        positionSearchObservers.add(filterPositionObserver);
+    public void registerFilterObserver(FilterResultObserver filterResultObserver) {
+        filterObservers.add(filterResultObserver);
     }
 
     public void setSearchResultByName(String name) {
@@ -105,7 +105,7 @@ public class HRModel {
             }
         }
         currentSearchResult = filteredResult;
-        notifyPositionSearchObservers();
+        notifyFilterObservers();
     }
 
     public void setSelectedEmployee(long id) {
