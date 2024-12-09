@@ -31,7 +31,7 @@ public class HRController {
     public void addListenersToLoginPanel(){
         LogInPanel logInPanel = view.getLogInPanel();
 
-        logInPanel.getCancelButton().addActionListener(e->{
+        logInPanel.getExitButton().addActionListener(e->{
             System.exit(0);
         });
 
@@ -129,6 +129,10 @@ public class HRController {
                     hrPanel.getUndoChangesButton().setEnabled(false);
                 }
             }
+        });
+
+        hrPanel.getLogOutButton().addActionListener(e->{
+            view.switchTo("Login");
         });
     }
 

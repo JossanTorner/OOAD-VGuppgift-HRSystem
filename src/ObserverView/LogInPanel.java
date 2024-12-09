@@ -12,18 +12,28 @@ public class LogInPanel extends JPanel {
     JPasswordField passwordField = new JPasswordField();
 
     JButton loginButton = new JButton("Login");
-    JButton cancelButton = new JButton("Cancel");
+    JButton exitButton = new JButton("Exit");
 
     public LogInPanel() {
+        setLayout(new BorderLayout(10, 10));
 
-        setLayout(new GridLayout(3, 2, 10, 10));
+        JLabel titleLabel = new JLabel("Login", JLabel.CENTER);
+        titleLabel.setFont(new Font("Arial", Font.BOLD, 18));
+        add(titleLabel, BorderLayout.NORTH);
 
-        add(userLabel);
-        add(userField);
-        add(passwordLabel);
-        add(passwordField);
-        add(loginButton);
-        add(cancelButton);
+        JPanel fieldsPanel = new JPanel(new GridLayout(2, 2, 10, 10));
+        fieldsPanel.add(userLabel);
+        fieldsPanel.add(userField);
+        fieldsPanel.add(passwordLabel);
+        fieldsPanel.add(passwordField);
+        add(fieldsPanel, BorderLayout.CENTER);
+
+        JPanel buttonPanel = new JPanel(new GridLayout(1, 2, 10, 10));
+        buttonPanel.add(loginButton);
+        buttonPanel.add(exitButton);
+        add(buttonPanel, BorderLayout.SOUTH);
+
+        setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
     }
 
     public JTextField getUserField() {
@@ -38,8 +48,8 @@ public class LogInPanel extends JPanel {
         return loginButton;
     }
 
-    public JButton getCancelButton() {
-        return cancelButton;
+    public JButton getExitButton() {
+        return exitButton;
     }
 
 

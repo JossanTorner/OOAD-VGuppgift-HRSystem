@@ -23,6 +23,8 @@ public class HRPanel extends JPanel {
     JLabel filterLabel;
     JComboBox<String> filterComboBox;
 
+    JButton logOutButton;
+
     JPanel centerPanel;
     JPanel searchResultPanel;
     JTable searchResultTable;
@@ -53,6 +55,8 @@ public class HRPanel extends JPanel {
         radioButtonID = new JRadioButton("ID");
         filterLabel = new JLabel("Filter      ", SwingConstants.RIGHT);
         filterComboBox = new JComboBox<>(new String[]{"None", "CEO", "Manager", "Developer", "Product Owner", "Scrum-master", "Subordinate"});
+
+        logOutButton = new JButton("Log Out");
 
         centerPanel = new JPanel();
         searchResultPanel = new JPanel();
@@ -96,6 +100,7 @@ public class HRPanel extends JPanel {
         topPanel.add(radioButtonPanel);
         topPanel.add(filterLabel);
         topPanel.add(filterComboBox);
+        topPanel.add(logOutButton);
 
         centerPanel.setLayout(new GridLayout(2,1));
         centerPanel.add(searchResultPanel);
@@ -261,5 +266,9 @@ public class HRPanel extends JPanel {
 
     public JButton getUndoChangesButton(){
         return undoChangesButton;
+    }
+
+    public JButton getLogOutButton(){
+        return logOutButton;
     }
 }

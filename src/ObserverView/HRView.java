@@ -17,7 +17,6 @@ public class HRView implements EmployeeDetailsObserver, SearchResultObserver, Fi
     HRPanel hrPanel = new HRPanel();
     LogInPanel logInPanel = new LogInPanel();
 
-
     HRModel model;
 
     public HRView(HRModel model) {
@@ -28,9 +27,7 @@ public class HRView implements EmployeeDetailsObserver, SearchResultObserver, Fi
 
     public void init() {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(800, 600);
         frame.setLocationRelativeTo(null);
-        frame.setVisible(true);
         frame.add(cardPanel);
 
         cardPanel.add(logInPanel, "Login");
@@ -38,10 +35,19 @@ public class HRView implements EmployeeDetailsObserver, SearchResultObserver, Fi
 
         switchTo("Login");
         populateAllEmployees();
+        frame.setVisible(true);
     }
 
     public void switchTo(String name) {
         cardLayout.show(cardPanel, name);
+        if (name.equalsIgnoreCase("Login")){
+            frame.setSize(500, 200);
+            frame.setLocationRelativeTo(null);
+        }
+        else{
+            frame.setSize(800, 600);
+            frame.setLocationRelativeTo(null);
+        }
     }
 
     private void registerAsObserver(){
