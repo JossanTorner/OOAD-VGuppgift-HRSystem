@@ -2,7 +2,7 @@ package EmployeeDatabase;
 
 public class Employee {
 
-    private long employeeId;
+    private final long employeeId;
     private String name;
     private double salary;
     private Position position;
