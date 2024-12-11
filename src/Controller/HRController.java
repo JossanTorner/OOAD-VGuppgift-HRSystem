@@ -67,7 +67,12 @@ public class HRController {
             if (hrPanel.getRadioButtonName().isSelected()){
                 model.setSearchResultByName(searchTerm);
             } else if (hrPanel.getRadioButtonID().isSelected()) {
-                model.setSearchResultById(Long.parseLong(searchTerm));
+                try{
+                    model.setSearchResultById(Long.parseLong(searchTerm));
+                }
+                catch (NumberFormatException ex){
+                    System.out.println("Exception was thrown; program continues");
+                }
             }
         });
 
@@ -75,14 +80,9 @@ public class HRController {
             makingChanges = false;
             hrPanel.changeEmployeeState(false);
             String selectedPosition = (String) hrPanel.getFilterComboBox().getSelectedItem();
-            if (!selectedPosition.equalsIgnoreCase("none")) {
-                for (Position position : Position.values()) {
-                    if (position.title.equalsIgnoreCase(selectedPosition)) {
-                        model.filterSearchResultByPosition(position);
-                        view.updateFilteredResult();
-                    }
-                }
-            }
+            assert selectedPosition != null;
+            model.filterSearchResultByPosition(selectedPosition);
+            view.updateFilteredResult();
         });
 
         hrPanel.getShowDetailsButton().addActionListener(e -> {
@@ -93,9 +93,14 @@ public class HRController {
                 JOptionPane.showMessageDialog(hrPanel, "Select an employee to view details");
                 return;
             }
-            long id = Long.parseLong(hrPanel.getSearchResultTable().getValueAt(selectedRow, 0).toString());
-            model.setSelectedEmployee(id);
-            view.updateEmployeeDetails();
+            try{
+                long id = Long.parseLong(hrPanel.getSearchResultTable().getValueAt(selectedRow, 0).toString());
+                model.setSelectedEmployee(id);
+                view.updateEmployeeDetails();
+            }
+            catch(NumberFormatException ex){
+                System.out.println("Exception was thrown; program continues");
+            }
         });
 
         hrPanel.getMakeChangesButton().addActionListener(e->{
