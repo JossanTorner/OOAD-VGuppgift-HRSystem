@@ -1,19 +1,19 @@
 package Controller;
 
+import EmployeeDatabase.Employee;
 import EmployeeDatabase.Position;
 import HR.Commands.EmployeeInfoChange;
 import HR.UserSystem.AppUser;
 import HR.UserSystem.UserDatabase;
 import HR.UserSystem.AuthorizedManager;
-import ObserverView.HRPanel;
-import ObserverView.LogInPanel;
+import ObserverView.*;
 import SubjectModel.HRModel;
-import ObserverView.HRView;
 
 import javax.swing.*;
 import java.util.List;
+import java.util.Objects;
 
-public class HRController {
+public class HRController implements EmployeeChangeObserver, EmployeeDetailsObserver, FilterResultObserver, SearchResultObserver {
 
     private final HRView view;
     private final HRModel model;
@@ -22,10 +22,19 @@ public class HRController {
 
     public HRController(HRModel model) {
         this.model = model;
-        view = new HRView(model);
+
+        model.registerChangeObserver(this);
+        model.registerDetailsObserver(this);
+        model.registerSearchObserver(this);
+        model.registerFilterObserver(this);
+
+        view = new HRView();
         view.init();
+
         addListenersToHRPanel();
         addListenersToLoginPanel();
+        addListenersToRegisterPanel();
+        populateAllEmployees();
     }
 
     public void addListenersToLoginPanel(){
@@ -82,7 +91,7 @@ public class HRController {
             String selectedPosition = (String) hrPanel.getFilterComboBox().getSelectedItem();
             assert selectedPosition != null;
             model.filterSearchResultByPosition(selectedPosition);
-            view.updateFilteredResult();
+            updateFilteredResult();
         });
 
         hrPanel.getShowDetailsButton().addActionListener(e -> {
@@ -96,7 +105,7 @@ public class HRController {
             try{
                 long id = Long.parseLong(hrPanel.getSearchResultTable().getValueAt(selectedRow, 0).toString());
                 model.setSelectedEmployee(id);
-                view.updateEmployeeDetails();
+                updateEmployeeDetails();
             }
             catch(NumberFormatException ex){
                 System.out.println("Exception was thrown; program continues");
@@ -114,7 +123,7 @@ public class HRController {
                     List<EmployeeInfoChange> changesMade = hrPanel.getChangesMade(model.getSelectedEmployee());
                     ((AuthorizedManager) appUser).makeUpdate(model.getSelectedEmployee(), changesMade);
                     model.setChangedEmployee(model.getSelectedEmployee());
-                    view.updateEmployee();
+                    updateEmployee();
                     hrPanel.getUndoChangesButton().setEnabled(true);
                 }
             }
@@ -126,8 +135,8 @@ public class HRController {
         hrPanel.getUndoChangesButton().addActionListener(e->{
             if (appUser instanceof AuthorizedManager){
                 try{
-                    ((AuthorizedManager) appUser).undoUpdate();
-                    view.updateEmployee();
+                    ((AuthorizedManager) appUser).undoCommand();
+                    updateEmployee();
                 }
                 catch (IllegalArgumentException ex){
                     JOptionPane.showMessageDialog(hrPanel, ex.getMessage());
@@ -136,9 +145,86 @@ public class HRController {
             }
         });
 
+        hrPanel.getNewEmployeeButton().addActionListener(e->{
+            if(appUser instanceof AuthorizedManager){
+                view.switchTo("Register");
+            }
+            else{
+                JOptionPane.showMessageDialog(hrPanel, "You are not authorized to register new employees");
+            }
+        });
+
         hrPanel.getLogOutButton().addActionListener(e->{
             view.switchTo("Login");
         });
     }
 
+    public void addListenersToRegisterPanel(){
+        RegisterEmployeePanel registerPanel = view.getRegisterEmployeePanel();
+
+        registerPanel.getDoneButton().addActionListener(e->{
+            if (appUser instanceof AuthorizedManager authorizedManager){
+
+                String name = registerPanel.getEmployeeName().getText();
+                long id = Long.parseLong(registerPanel.getId().getText().trim());
+                double salary = Double.parseDouble(registerPanel.getSalary().getText());
+                int employmentPercentage = Integer.parseInt(registerPanel.getEmploymentPercentage().getText());
+                String email = registerPanel.getEmail().getText();
+                String phoneNumber = registerPanel.getPhoneNumber().getText();
+                String positionName = (String) registerPanel.getPositionBox().getSelectedItem();
+
+                Position selectedPosition = null;
+                for(Position position : Position.values()){
+                    if(Objects.requireNonNull(positionName).equalsIgnoreCase(position.title)){
+                        selectedPosition = position;
+                    }
+                }
+
+                authorizedManager.createNewEmployee(name, id, selectedPosition, salary, employmentPercentage, email, phoneNumber);
+                populateAllEmployees();
+                view.switchTo("HR");
+            }
+        });
+
+        registerPanel.getCancelButton().addActionListener(e->{
+            view.switchTo("HR");
+        });
+    }
+
+    private void populateAllEmployees() {
+        model.setSearchResultByName("");
+    }
+
+    @Override
+    public void updateEmployee() {
+        view.getHrPanel().resetTable();
+        List<Employee> currentSearchResult = model.getCurrentSearchResult();
+        for(Employee employee : currentSearchResult){
+            view.getHrPanel().addEmployeeRow(employee);
+        }
+        view.setFieldsWithDetails(model.getChangedEmployee());
+    }
+
+    @Override
+    public void updateEmployeeDetails() {
+        view.setFieldsWithDetails(model.getSelectedEmployee());
+    }
+
+    @Override
+    public void updateFilteredResult() {
+        view.getHrPanel().resetTable();
+        List<Employee> currentFilteredResult = model.getCurrentFilteredResult();
+        for(Employee employee : currentFilteredResult){
+            view.getHrPanel().addEmployeeRow(employee);
+        }
+    }
+
+    @Override
+    public void updateSearchResult() {
+        view.getHrPanel().resetTable();
+        List<Employee> currentSearchResult = model.getCurrentSearchResult();
+        for(Employee employee: currentSearchResult){
+            view.getHrPanel().addEmployeeRow(employee);
+        }
+    }
 }

@@ -5,9 +5,13 @@ import EmployeeDatabase.Employee;
 import HR.Commands.Command;
 import HR.Commands.EmployeeInfoChange;
 import HR.Commands.ChangeEmployeeCommand;
+import HR.Commands.NewEmployeeCommand;
+import EmployeeDatabase.*;
 
 import java.util.ArrayList;
 import java.util.List;
+
+
 
 public class SeniorHRManager extends AppUser implements AuthorizedManager {
 
@@ -29,7 +33,15 @@ public class SeniorHRManager extends AppUser implements AuthorizedManager {
     }
 
     @Override
-    public void undoUpdate(){
+    public void createNewEmployee(String name, long id, Position position, double salary, int employmentPercentage, String email, String phoneNumber){
+        Employee newEmployee = new Employee(id, name, salary, position, email, phoneNumber, employmentPercentage);
+        Command command = new NewEmployeeCommand(employeeDatabase.getEmployees(), newEmployee);
+        command.execute();
+        commandHistory.add(command);
+    }
+
+    @Override
+    public void undoCommand(){
         if(!commandHistory.isEmpty()){
             Command latestCommand = commandHistory.getLast();
             latestCommand.undo();

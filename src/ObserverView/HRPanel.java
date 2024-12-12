@@ -24,6 +24,7 @@ public class HRPanel extends JPanel {
     JComboBox<String> filterComboBox;
 
     JButton logOutButton;
+    JButton newEmployeeButton;
 
     JPanel centerPanel;
     JPanel searchResultPanel;
@@ -57,6 +58,9 @@ public class HRPanel extends JPanel {
         filterComboBox = new JComboBox<>(new String[]{"None", "CEO", "Manager", "Developer", "Product Owner", "Scrum-master", "Subordinate"});
 
         logOutButton = new JButton("Log Out");
+        newEmployeeButton = new JButton("Register new employee");
+        Dimension buttonSize = new Dimension(200, newEmployeeButton.getPreferredSize().height);
+        newEmployeeButton.setPreferredSize(buttonSize);
 
         centerPanel = new JPanel();
         searchResultPanel = new JPanel();
@@ -94,13 +98,29 @@ public class HRPanel extends JPanel {
         radioButtonPanel.add(radioButtonName);
         radioButtonPanel.add(radioButtonID);
 
-        topPanel.setLayout(new GridLayout(1,5));
-        topPanel.add(searchLabel);
-        topPanel.add(searchField);
-        topPanel.add(radioButtonPanel);
-        topPanel.add(filterLabel);
-        topPanel.add(filterComboBox);
-        topPanel.add(logOutButton);
+//        topPanel.setLayout(new GridLayout(1,5));
+//        topPanel.add(newEmployeeButton);
+//        topPanel.add(searchLabel);
+//        topPanel.add(searchField);
+//        topPanel.add(radioButtonPanel);
+//        topPanel.add(filterLabel);
+//        topPanel.add(filterComboBox);
+//        topPanel.add(logOutButton);
+
+        JPanel newEmployeePanel = new JPanel(new BorderLayout());
+        newEmployeePanel.add(newEmployeeButton, BorderLayout.WEST);
+
+        JPanel topButtonPanel = new JPanel(new GridLayout(1, 5));
+        topButtonPanel.add(searchLabel);
+        topButtonPanel.add(searchField);
+        topButtonPanel.add(radioButtonPanel);
+        topButtonPanel.add(filterLabel);
+        topButtonPanel.add(filterComboBox);
+        topButtonPanel.add(logOutButton);
+
+        topPanel.setLayout(new BorderLayout());
+        topPanel.add(newEmployeePanel, BorderLayout.WEST);
+        topPanel.add(topButtonPanel, BorderLayout.CENTER);
 
         centerPanel.setLayout(new GridLayout(2,1));
         centerPanel.add(searchResultPanel);
@@ -132,10 +152,9 @@ public class HRPanel extends JPanel {
         showDetailsCenterPanel.add(showDetailsEmailTextField);
         showDetailsCenterPanel.add(showDetailsSalaryTextField);
         showDetailsCenterPanel.add(showDetailsPhoneTextField);
-//        showDetailsMainPanel.add(makeChangesButton, BorderLayout.SOUTH);
 
         JPanel buttonPanel = new JPanel();
-        buttonPanel.setLayout(new GridLayout(2, 1)); // Two rows for two buttons
+        buttonPanel.setLayout(new GridLayout(2, 1));
         buttonPanel.add(makeChangesButton);
         buttonPanel.add(undoChangesButton);
         showDetailsMainPanel.add(buttonPanel, BorderLayout.SOUTH);
@@ -270,5 +289,9 @@ public class HRPanel extends JPanel {
 
     public JButton getLogOutButton(){
         return logOutButton;
+    }
+
+    public JButton getNewEmployeeButton(){
+        return newEmployeeButton;
     }
 }

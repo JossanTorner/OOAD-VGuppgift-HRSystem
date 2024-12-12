@@ -7,7 +7,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.List;
 
-public class HRView implements EmployeeDetailsObserver, SearchResultObserver, FilterResultObserver, EmployeeChangeObserver {
+public class HRView {
 
     JFrame frame;
 
@@ -16,12 +16,9 @@ public class HRView implements EmployeeDetailsObserver, SearchResultObserver, Fi
 
     HRPanel hrPanel = new HRPanel();
     LogInPanel logInPanel = new LogInPanel();
+    RegisterEmployeePanel registerEmployeePanel = new RegisterEmployeePanel();
 
-    HRModel model;
-
-    public HRView(HRModel model) {
-        this.model = model;
-        registerAsObserver();
+    public HRView() {
         frame = new JFrame();
     }
 
@@ -32,9 +29,9 @@ public class HRView implements EmployeeDetailsObserver, SearchResultObserver, Fi
 
         cardPanel.add(logInPanel, "Login");
         cardPanel.add(hrPanel, "HR");
+        cardPanel.add(registerEmployeePanel, "Register");
 
         switchTo("Login");
-        populateAllEmployees();
         frame.setVisible(true);
     }
 
@@ -44,24 +41,16 @@ public class HRView implements EmployeeDetailsObserver, SearchResultObserver, Fi
             frame.setSize(500, 200);
             frame.setLocationRelativeTo(null);
         }
+        else if (name.equalsIgnoreCase("Register")){
+            frame.setSize(400, 400);
+        }
         else{
             frame.setSize(800, 600);
             frame.setLocationRelativeTo(null);
         }
     }
 
-    private void registerAsObserver(){
-        model.registerDetailsObserver(this);
-        model.registerSearchObserver(this);
-        model.registerFilterObserver(this);
-        model.registerChangeObserver(this);
-    }
-
-    private void populateAllEmployees() {
-        model.setSearchResultByName("");
-    }
-
-    private void setFieldsWithDetails(Employee selectedEmployee){
+    public void setFieldsWithDetails(Employee selectedEmployee){
         hrPanel.getShowDetailsNameTextField().setText(selectedEmployee.getName());
         hrPanel.getShowDetailsPositionTextField().setText(selectedEmployee.getPosition().name());
         hrPanel.getShowDetailsSalaryTextField().setText(String.valueOf(selectedEmployee.getSalary()));
@@ -78,37 +67,42 @@ public class HRView implements EmployeeDetailsObserver, SearchResultObserver, Fi
         return logInPanel;
     }
 
-    @Override
-    public void updateEmployeeDetails() {
-        setFieldsWithDetails(model.getSelectedEmployee());
+    public RegisterEmployeePanel getRegisterEmployeePanel() {
+        return registerEmployeePanel;
     }
 
-    @Override
-    public void updateSearchResult() {
-        hrPanel.resetTable();
-        List<Employee> currentSearchResult = model.getCurrentSearchResult();
-        for(Employee employee: currentSearchResult){
-            hrPanel.addEmployeeRow(employee);
-        }
-    }
-
-    @Override
-    public void updateFilteredResult() {
-        hrPanel.resetTable();
-        List<Employee> currentFilteredResult = model.getCurrentFilteredResult();
-        for(Employee employee : currentFilteredResult){
-            hrPanel.addEmployeeRow(employee);
-        }
-    }
-
-    @Override
-    public void updateEmployee(){
-        hrPanel.resetTable();
-        List<Employee> currentSearchResult = model.getCurrentSearchResult();
-        for(Employee employee : currentSearchResult){
-            hrPanel.addEmployeeRow(employee);
-        }
-        setFieldsWithDetails(model.getChangedEmployee()); //?
-//        updateEmployeeDetails(model.getSelectedEmployee());
-    }
+    //
+//    @Override
+//    public void updateEmployeeDetails() {
+//        setFieldsWithDetails(model.getSelectedEmployee());
+//    }
+//
+//    @Override
+//    public void updateSearchResult() {
+//        hrPanel.resetTable();
+//        List<Employee> currentSearchResult = model.getCurrentSearchResult();
+//        for(Employee employee: currentSearchResult){
+//            hrPanel.addEmployeeRow(employee);
+//        }
+//    }
+//
+//    @Override
+//    public void updateFilteredResult() {
+//        hrPanel.resetTable();
+//        List<Employee> currentFilteredResult = model.getCurrentFilteredResult();
+//        for(Employee employee : currentFilteredResult){
+//            hrPanel.addEmployeeRow(employee);
+//        }
+//    }
+//
+//    @Override
+//    public void updateEmployee(){
+//        hrPanel.resetTable();
+//        List<Employee> currentSearchResult = model.getCurrentSearchResult();
+//        for(Employee employee : currentSearchResult){
+//            hrPanel.addEmployeeRow(employee);
+//        }
+//        setFieldsWithDetails(model.getChangedEmployee()); //?
+////        updateEmployeeDetails(model.getSelectedEmployee());
+//    }
 }

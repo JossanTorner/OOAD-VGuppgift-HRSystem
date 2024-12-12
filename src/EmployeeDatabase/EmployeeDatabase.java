@@ -38,4 +38,8 @@ public class EmployeeDatabase {
         }
         return matchingEmployees;
     }
+
+    public HashMap<Long, Employee> getEmployees() {
+        return employees;
+    }
 }
