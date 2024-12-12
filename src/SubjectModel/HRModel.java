@@ -8,7 +8,6 @@ import java.util.List;
 
 public class HRModel {
 
-    private final EmployeeDatabase employeeDatabase;
     private List<Employee> currentSearchResult;
     private final List<Employee> filteredResult;
     private Employee selectedEmployee;
@@ -20,7 +19,6 @@ public class HRModel {
     private final List<EmployeeChangeObserver> changeObservers;
 
     public HRModel() {
-        employeeDatabase = new EmployeeDatabase();
 
         currentSearchResult = new ArrayList<>();
         filteredResult = new ArrayList<>();
@@ -88,12 +86,12 @@ public class HRModel {
     }
 
     public void setSearchResultByName(String name) {
-        currentSearchResult = employeeDatabase.searchByName(name);
+        currentSearchResult = EmployeeDatabase.getInstance().searchByName(name);
         notifySearchObservers();
     }
 
     public void setSearchResultById(long id) {
-        currentSearchResult = employeeDatabase.searchByID(id);
+        currentSearchResult = EmployeeDatabase.getInstance().searchByID(id);
         notifySearchObservers();
     }
 
@@ -109,12 +107,11 @@ public class HRModel {
         else{
             filteredResult.addAll(currentSearchResult);
         }
-//        currentSearchResult = filteredResult;
         notifyFilterObservers();
     }
 
     public void setSelectedEmployee(long id) {
-        List<Employee> foundEmployees = employeeDatabase.searchByID(id);
+        List<Employee> foundEmployees = EmployeeDatabase.getInstance().searchByID(id);
         if (foundEmployees != null) {
             selectedEmployee = foundEmployees.getFirst();
         }

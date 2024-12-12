@@ -8,12 +8,21 @@ public class EmployeeDatabase {
 
     HashMap<Long, Employee> employees = new HashMap<>();
 
-    public EmployeeDatabase() {
+    private static EmployeeDatabase instance;
+
+    private EmployeeDatabase() {
         LoadData dataLoader = new LoadData();
         loadMap(dataLoader);
     }
 
-    public void loadMap(LoadData loadData) {
+    public static EmployeeDatabase getInstance() {
+        if (instance == null) {
+            instance = new EmployeeDatabase();
+        }
+        return instance;
+    }
+
+    private void loadMap(LoadData loadData) {
         loadData.getEmployees().forEach(employee -> {
             employees.put(employee.getEmployeeId(), employee);
         });

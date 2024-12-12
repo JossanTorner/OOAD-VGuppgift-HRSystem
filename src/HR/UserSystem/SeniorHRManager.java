@@ -15,14 +15,12 @@ import java.util.List;
 
 public class SeniorHRManager extends AppUser implements AuthorizedManager {
 
-    EmployeeDatabase employeeDatabase;
     List<Command> commandHistory;
 
     public SeniorHRManager(String name, String password) {
         super(name, password);
 
         commandHistory = new ArrayList<>();
-        employeeDatabase = new EmployeeDatabase();
     }
 
     @Override
@@ -35,7 +33,7 @@ public class SeniorHRManager extends AppUser implements AuthorizedManager {
     @Override
     public void createNewEmployee(String name, long id, Position position, double salary, int employmentPercentage, String email, String phoneNumber){
         Employee newEmployee = new Employee(id, name, salary, position, email, phoneNumber, employmentPercentage);
-        Command command = new NewEmployeeCommand(employeeDatabase.getEmployees(), newEmployee);
+        Command command = new NewEmployeeCommand(EmployeeDatabase.getInstance().getEmployees(), newEmployee);
         command.execute();
         commandHistory.add(command);
     }
