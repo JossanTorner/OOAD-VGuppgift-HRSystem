@@ -138,11 +138,11 @@ public class HRController {
         });
 
         hrPanel.getLogOutButton().addActionListener(e->{
-            appUser = null;
             view.getHrPanel().getUndoChangesButton().setEnabled(false);
             if (appUser instanceof AuthorizedManager authorizedManager){
                 authorizedManager.clearCommandHistory();
             }
+            appUser = null;
             view.switchTo("Login");
         });
     }
