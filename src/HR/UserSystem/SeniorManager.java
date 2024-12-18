@@ -9,12 +9,12 @@ import HR.Commands.ChangeEmployeeCommand;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SeniorHRManager extends AppUser implements AuthorizedManager {
+public class SeniorManager extends AppUser implements AuthorizedManager {
 
     EmployeeDatabase employeeDatabase;
     List<Command> commandHistory;
 
-    public SeniorHRManager(String name, String password) {
+    public SeniorManager(String name, String password) {
         super(name, password);
 
         commandHistory = new ArrayList<>();
@@ -38,5 +38,15 @@ public class SeniorHRManager extends AppUser implements AuthorizedManager {
         else{
             throw new IllegalArgumentException("Nothing to undo");
         }
+    }
+
+    @Override
+    public List<Command> getCommandHistory(){
+        return commandHistory;
+    }
+
+    @Override
+    public void resetCommandHistory(){
+        commandHistory.clear();
     }
 }
