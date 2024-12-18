@@ -46,7 +46,7 @@ public class SeniorManager extends AppUser implements AuthorizedManager {
     }
 
     @Override
-    public void resetCommandHistory(){
+    public void clearCommandHistory(){
         commandHistory.clear();
     }
 }

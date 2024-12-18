@@ -141,7 +141,7 @@ public class HRController {
             appUser = null;
             view.getHrPanel().getUndoChangesButton().setEnabled(false);
             if (appUser instanceof AuthorizedManager authorizedManager){
-                authorizedManager.resetCommandHistory();
+                authorizedManager.clearCommandHistory();
             }
             view.switchTo("Login");
         });

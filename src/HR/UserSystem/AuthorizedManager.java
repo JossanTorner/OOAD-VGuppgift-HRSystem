@@ -14,5 +14,5 @@ public interface AuthorizedManager {
 
     List<Command> getCommandHistory();
 
-    void resetCommandHistory();
+    void clearCommandHistory();
 }
