@@ -15,31 +15,31 @@ public class ChangeEmployeeCommand implements Command {
         this.changesMade = changesMade;
     }
 
-    public Object getOldValue(String employeeVariable){
-        switch(employeeVariable.toUpperCase()){
-            case "NAME" ->{
-                return employee.getName();
-            }
-            case "POSITION" ->{
-                return employee.getPosition();
-            }
-            case "SALARY" ->{
-                return employee.getSalary();
-            }
-            case "WORKING_PERCENTAGE" ->{
-                return employee.getWorkingPercentage();
-            }
-            case "EMAIL" ->{
-                return employee.getEmail();
-            }
-            case "PHONE_NUMBER" ->{
-                return employee.getPhoneNumber();
-            }
-            default ->{
-                return null;
-            }
-        }
-    }
+//    public Object getOldValue(String employeeVariable){
+//        switch(employeeVariable.toUpperCase()){
+//            case "NAME" ->{
+//                return employee.getName();
+//            }
+//            case "POSITION" ->{
+//                return employee.getPosition();
+//            }
+//            case "SALARY" ->{
+//                return employee.getSalary();
+//            }
+//            case "WORKING_PERCENTAGE" ->{
+//                return employee.getWorkingPercentage();
+//            }
+//            case "EMAIL" ->{
+//                return employee.getEmail();
+//            }
+//            case "PHONE_NUMBER" ->{
+//                return employee.getPhoneNumber();
+//            }
+//            default ->{
+//                return null;
+//            }
+//        }
+//    }
 
     public void makeChange(String employeeVariable, Object value) {
         switch(employeeVariable.toUpperCase()){

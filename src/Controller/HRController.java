@@ -1,6 +1,5 @@
 package Controller;
 
-import EmployeeDatabase.Position;
 import HR.Commands.EmployeeInfoChange;
 import HR.UserSystem.AppUser;
 import HR.UserSystem.UserDatabase;
@@ -47,6 +46,7 @@ public class HRController {
             if (loggedIn != null) {
                 appUser = loggedIn;
                 System.out.println("Logged in: " + appUser.getName());
+                view.populateAllEmployees();
                 view.switchTo("HR");
             }
             else{
@@ -54,6 +54,7 @@ public class HRController {
                 logInPanel.getPasswordField().setText("");
                 logInPanel.getUserField().setText("");
             }
+            logInPanel.resetLoginPanel();
         });
     }
 
@@ -137,6 +138,7 @@ public class HRController {
         });
 
         hrPanel.getLogOutButton().addActionListener(e->{
+            appUser = null;
             view.switchTo("Login");
         });
     }

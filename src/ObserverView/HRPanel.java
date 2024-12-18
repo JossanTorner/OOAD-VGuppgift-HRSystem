@@ -132,10 +132,9 @@ public class HRPanel extends JPanel {
         showDetailsCenterPanel.add(showDetailsEmailTextField);
         showDetailsCenterPanel.add(showDetailsSalaryTextField);
         showDetailsCenterPanel.add(showDetailsPhoneTextField);
-//        showDetailsMainPanel.add(makeChangesButton, BorderLayout.SOUTH);
 
         JPanel buttonPanel = new JPanel();
-        buttonPanel.setLayout(new GridLayout(2, 1)); // Two rows for two buttons
+        buttonPanel.setLayout(new GridLayout(2, 1));
         buttonPanel.add(makeChangesButton);
         buttonPanel.add(undoChangesButton);
         showDetailsMainPanel.add(buttonPanel, BorderLayout.SOUTH);

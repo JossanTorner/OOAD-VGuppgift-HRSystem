@@ -34,7 +34,6 @@ public class HRView implements EmployeeDetailsObserver, SearchResultObserver, Fi
         cardPanel.add(hrPanel, "HR");
 
         switchTo("Login");
-        populateAllEmployees();
         frame.setVisible(true);
     }
 
@@ -57,7 +56,7 @@ public class HRView implements EmployeeDetailsObserver, SearchResultObserver, Fi
         model.registerChangeObserver(this);
     }
 
-    private void populateAllEmployees() {
+    public void populateAllEmployees() {
         model.setSearchResultByName("");
     }
 
@@ -109,6 +108,5 @@ public class HRView implements EmployeeDetailsObserver, SearchResultObserver, Fi
             hrPanel.addEmployeeRow(employee);
         }
         setFieldsWithDetails(model.getChangedEmployee()); //?
-//        updateEmployeeDetails(model.getSelectedEmployee());
     }
 }

@@ -9,12 +9,12 @@ public class EmployeeDatabase {
     HashMap<Long, Employee> employees = new HashMap<>();
 
     public EmployeeDatabase() {
-        LoadData dataLoader = new LoadData();
+        DataLoader dataLoader = new DataLoader();
         loadMap(dataLoader);
     }
 
-    public void loadMap(LoadData loadData) {
-        loadData.getEmployees().forEach(employee -> {
+    public void loadMap(DataLoader dataLoader) {
+        dataLoader.getEmployees().forEach(employee -> {
             employees.put(employee.getEmployeeId(), employee);
         });
     }

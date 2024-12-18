@@ -5,7 +5,7 @@ public enum Position {
     MANAGER("Manager"),
     SUBORDINATE("Subordinate"),
     DEVELOPER("Developer"),
-    PRODUCT_OWNER("Product owner"),
+    PRODUCT_OWNER("Product Owner"),
     SCRUM_MASTER("Scrum-master");
 
     public final String title;

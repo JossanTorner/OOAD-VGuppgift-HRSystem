@@ -98,18 +98,19 @@ public class HRModel {
     }
 
     public void filterSearchResultByPosition(String position) {
-        filteredResult.clear();
-        if (!position.equalsIgnoreCase("none")) {
+        if (position.equals("None")) {
+            filteredResult.clear();
+            filteredResult.addAll(currentSearchResult);
+        } else {
+            List<Employee> filteredList = new ArrayList<>();
             for (Employee employee : currentSearchResult) {
                 if (employee.getPosition().title.equals(position)) {
-                    filteredResult.add(employee);
+                    filteredList.add(employee);
                 }
             }
+            filteredResult.clear();
+            filteredResult.addAll(filteredList);
         }
-        else{
-            filteredResult.addAll(currentSearchResult);
-        }
-//        currentSearchResult = filteredResult;
         notifyFilterObservers();
     }
 

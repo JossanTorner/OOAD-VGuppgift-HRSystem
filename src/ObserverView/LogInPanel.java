@@ -52,5 +52,9 @@ public class LogInPanel extends JPanel {
         return exitButton;
     }
 
+    public void resetLoginPanel(){
+        passwordField.setText("");
+        userField.setText("");
+    }
 
 }

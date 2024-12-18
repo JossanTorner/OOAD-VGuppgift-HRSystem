@@ -3,11 +3,11 @@ package EmployeeDatabase;
 import java.util.Arrays;
 import java.util.List;
 
-public class LoadData {
+public class DataLoader {
 
     List<Employee> employees;
 
-    LoadData() {
+    DataLoader() {
 
         employees = Arrays.asList(
                 new Employee(203214, "Andreas Ohlander", 85900, Position.PRODUCT_OWNER, "andreas@mail.com", "070882233", 110),
